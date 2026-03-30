@@ -1,10 +1,13 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 
@@ -16,6 +19,9 @@ import (
 // (see TRACING.md). Handlers still call StartSpan so wiring matches production.
 
 func main() {
+	if err := godotenv.Load(); err != nil && !errors.Is(err, os.ErrNotExist) {
+		log.Printf("warning: load .env: %v", err)
+	}
 	logger := observability.NewLogger(nil)
 	metrics := observability.NewOrderMetrics("order")
 

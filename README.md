@@ -8,6 +8,7 @@ Small Go workspace demonstrating structured logging, Prometheus metrics, OpenTel
 |------|---------|
 | `cmd/api` | HTTP entrypoint: `/health`, `/metrics`, `/demo` (uses `observability`) |
 | `internal/config` | Minimal config (e.g. `PORT` for the server) |
+| `.env.example` | Documented environment variables; copy to `.env` for local runs |
 | `observability` | Logging, metrics, tracing helpers |
 | `testing/setup` | Postgres + WireMock testcontainers |
 | `testing/integration` | Integration tests (Docker required) |
@@ -15,13 +16,27 @@ Small Go workspace demonstrating structured logging, Prometheus metrics, OpenTel
 
 ## Run the API
 
+### Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PORT` | `8080` | HTTP listen port (`8080` or `:8080`) |
+
+Copy the example file and edit values as needed:
+
+```bash
+cp .env.example .env
+```
+
+The process loads `.env` from the current working directory when the file exists (ignored by git). You can still override with `PORT=3000 go run ./cmd/api`.
+
 ### Locally (Go installed)
 
 ```bash
 go run ./cmd/api
 ```
 
-Set a custom port with `PORT=3000 go run ./cmd/api`.
+With a custom port without a file: `PORT=3000 go run ./cmd/api`.
 
 ### With Docker
 
@@ -41,6 +56,12 @@ Or override the port:
 
 ```bash
 docker run --rm -e PORT=3000 -p 3000:3000 order-api
+```
+
+Or pass a file (e.g. after `cp .env.example .env`):
+
+```bash
+docker run --rm --env-file .env -p 8080:8080 order-api
 ```
 
 ### Verify
