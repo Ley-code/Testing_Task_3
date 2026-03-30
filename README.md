@@ -15,11 +15,41 @@ Small Go workspace demonstrating structured logging, Prometheus metrics, OpenTel
 
 ## Run the API
 
+### Locally (Go installed)
+
 ```bash
 go run ./cmd/api
 ```
 
-Optional: `PORT=3000 go run ./cmd/api` — then open `http://localhost:3000/health`, `http://localhost:3000/metrics`, `http://localhost:3000/demo`.
+Set a custom port with `PORT=3000 go run ./cmd/api`.
+
+### With Docker
+
+Build the image:
+
+```bash
+docker build -t order-api .
+```
+
+Run the container:
+
+```bash
+docker run --rm -p 8080:8080 order-api
+```
+
+Or override the port:
+
+```bash
+docker run --rm -e PORT=3000 -p 3000:3000 order-api
+```
+
+### Verify
+
+Once the server is running, open any of these endpoints:
+
+- `http://localhost:8080/health`  — returns `ok`
+- `http://localhost:8080/metrics` — Prometheus metrics
+- `http://localhost:8080/demo`    — exercises logging, metrics, and tracing
 
 ## Tests
 
@@ -30,7 +60,7 @@ go test ./... -short
 Fast path; skips integration tests.
 
 ```bash
-go test ./... 
+go test ./...
 ```
 
 Runs integration tests (needs Docker). If Docker is unavailable, those tests skip with a clear message.
@@ -38,7 +68,7 @@ Runs integration tests (needs Docker). If Docker is unavailable, those tests ski
 ## Requirements
 
 - Go 1.18+
-- Docker (for integration tests only)
+- Docker (for running the container and integration tests)
 
 ## GitHub repository metadata (optional)
 
