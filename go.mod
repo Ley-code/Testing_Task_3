@@ -1,4 +1,4 @@
-module github.com/example/order-processing-service
+module github.com/Ley-code/Testing_Task_3
 
 go 1.18
 

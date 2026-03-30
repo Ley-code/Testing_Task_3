@@ -8,7 +8,7 @@ import (
 
 	_ "github.com/lib/pq"
 
-	"github.com/example/order-processing-service/testing/setup"
+	"github.com/Ley-code/Testing_Task_3/testing/setup"
 )
 
 // Order is a minimal aggregate for tests.
